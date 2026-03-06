@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProMark Agency | وكالة التسويق الرقمي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --gold: #D4AF37;
+    --gold-light: #F5D76E;
+    --dark: #0A0A0F;
+    --dark2: #111118;
+    --dark3: #1A1A24;
+    --dark4: #22222E;
+    --accent: #FF6B35;
+    --accent2: #7C3AED;
+    --text: #E8E8F0;
+    --text-muted: #8888AA;
+    --border: rgba(212,175,55,0.15);
+    --glass: rgba(255,255,255,0.04);
+    --success: #10B981;
+    --danger: #EF4444;
+    --info: #3B82F6;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--dark); color:var(--text); font-family:'Cairo',sans-serif; overflow-x:hidden; }
+
+  /* ===== NAVIGATION ===== */
+  nav {
+    position:fixed; top:0; width:100%; z-index:1000;
+    background:rgba(10,10,15,0.9); backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:0 5%;
+    display:flex; align-items:center; justify-content:space-between; height:70px;
+  }
+  .logo {
+    font-family:'Tajawal',sans-serif; font-size:1.6rem; font-weight:800;
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    letter-spacing:1px;
+  }
+  .nav-links { display:flex; gap:2rem; list-style:none; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:.95rem; transition:.3s; font-weight:500; }
+  .nav-links a:hover { color:var(--gold); }
+  .nav-btn {
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    color:#000; padding:.55rem 1.4rem; border-radius:50px;
+    font-weight:700; cursor:pointer; border:none; font-family:'Cairo',sans-serif;
+    font-size:.9rem; transition:.3s; text-decoration:none;
+  }
+  .nav-btn:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(212,175,55,.3); }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:80px 5% 40px;
+    position:relative; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,175,55,.08) 0%, transparent 70%),
+               radial-gradient(ellipse 40% 40% at 80% 80%, rgba(255,107,53,.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position:absolute; inset:0; opacity:.03;
+    background-image:linear-gradient(var(--gold) 1px, transparent 1px),
+                     linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size:60px 60px;
+  }
+  .hero-content { position:relative; z-index:2; max-width:800px; }
+  .hero-badge {
+    display:inline-flex; align-items:center; gap:.5rem;
+    background:rgba(212,175,55,.1); border:1px solid rgba(212,175,55,.3);
+    padding:.4rem 1.2rem; border-radius:50px; margin-bottom:2rem;
+    font-size:.85rem; color:var(--gold); font-weight:600;
+  }
+  .hero h1 {
+    font-family:'Tajawal',sans-serif; font-size:clamp(2.5rem,6vw,4.5rem);
+    font-weight:800; line-height:1.15; margin-bottom:1.5rem;
+  }
+  .hero h1 span {
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero p { font-size:1.15rem; color:var(--text-muted); max-width:550px; margin:0 auto 2.5rem; line-height:1.8; }
+  .hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  .btn-primary {
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    color:#000; padding:.85rem 2.2rem; border-radius:50px; font-weight:700;
+    cursor:pointer; border:none; font-family:'Cairo',sans-serif; font-size:1rem;
+    transition:.3s; text-decoration:none; display:inline-block;
+  }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(212,175,55,.35); }
+  .btn-outline {
+    border:1px solid var(--border); color:var(--text); padding:.85rem 2.2rem;
+    border-radius:50px; font-weight:600; cursor:pointer; background:transparent;
+    font-family:'Cairo',sans-serif; font-size:1rem; transition:.3s;
+    text-decoration:none; display:inline-block;
+  }
+  .btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+  .hero-stats {
+    display:flex; gap:3rem; justify-content:center; margin-top:4rem;
+    flex-wrap:wrap;
+  }
+  .stat { text-align:center; }
+  .stat-num { font-family:'Tajawal',sans-serif; font-size:2.2rem; font-weight:800; color:var(--gold); }
+  .stat-label { font-size:.85rem; color:var(--text-muted); margin-top:.2rem; }
+
+  /* ===== FLOATING ELEMENTS ===== */
+  .float-card {
+    position:absolute; background:var(--dark3); border:1px solid var(--border);
+    border-radius:16px; padding:1rem 1.5rem;
+    backdrop-filter:blur(10px); animation:float 6s ease-in-out infinite;
+    display:none;
+  }
+  @media(min-width:1100px){.float-card{display:block;}}
+  .float-card:nth-child(1){ left:5%; top:35%; animation-delay:0s; }
+  .float-card:nth-child(2){ right:5%; top:45%; animation-delay:-3s; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-15px)} }
+
+  /* ===== SECTIONS ===== */
+  section { padding:5rem 5%; }
+  .section-label {
+    display:inline-block; background:rgba(212,175,55,.1);
+    border:1px solid rgba(212,175,55,.3); color:var(--gold);
+    padding:.3rem 1rem; border-radius:50px; font-size:.8rem; font-weight:700;
+    margin-bottom:1rem; letter-spacing:2px; text-transform:uppercase;
+  }
+  .section-title { font-family:'Tajawal',sans-serif; font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; margin-bottom:1rem; }
+  .section-title span { background:linear-gradient(135deg,var(--gold),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .section-sub { color:var(--text-muted); font-size:1.05rem; max-width:550px; line-height:1.8; }
+  .text-center { text-align:center; }
+  .text-center .section-sub { margin:0 auto; }
+
+  /* ===== SERVICES ===== */
+  #services { background:var(--dark2); }
+  .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .service-card {
+    background:var(--dark3); border:1px solid var(--border); border-radius:20px;
+    padding:2rem; transition:.4s; position:relative; overflow:hidden;
+  }
+  .service-card::before {
+    content:''; position:absolute; inset:0; border-radius:20px;
+    background:linear-gradient(135deg,rgba(212,175,55,.05),transparent);
+    opacity:0; transition:.4s;
+  }
+  .service-card:hover { transform:translateY(-8px); border-color:rgba(212,175,55,.4); box-shadow:0 20px 50px rgba(0,0,0,.5); }
+  .service-card:hover::before { opacity:1; }
+  .service-icon {
+    width:55px; height:55px; border-radius:14px;
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; margin-bottom:1.2rem;
+  }
+  .service-card h3 { font-size:1.1rem; font-weight:700; margin-bottom:.6rem; }
+  .service-card p { color:var(--text-muted); font-size:.9rem; line-height:1.7; }
+  .service-link { color:var(--gold); font-size:.85rem; font-weight:600; margin-top:1rem; display:inline-flex; align-items:center; gap:.4rem; cursor:pointer; }
+
+  /* ===== ABOUT ===== */
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; margin-top:2rem; }
+  @media(max-width:768px){.about-grid{grid-template-columns:1fr;}}
+  .about-img {
+    border-radius:24px; overflow:hidden; position:relative;
+    background:linear-gradient(135deg,var(--dark3),var(--dark4));
+    border:1px solid var(--border); padding:2rem;
+    min-height:380px; display:flex; align-items:center; justify-content:center;
+  }
+  .about-visual { text-align:center; }
+  .about-visual .big-num {
+    font-family:'Tajawal',sans-serif; font-size:6rem; font-weight:900;
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    line-height:1;
+  }
+  .about-visual p { color:var(--text-muted); font-size:.95rem; margin-top:.5rem; }
+  .about-features { margin-top:1.5rem; display:flex; flex-direction:column; gap:.8rem; }
+  .feature-item { display:flex; align-items:center; gap:.8rem; }
+  .feat-dot { width:8px; height:8px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+  .feature-item p { color:var(--text-muted); font-size:.95rem; }
+
+  /* ===== PORTFOLIO ===== */
+  #portfolio { background:var(--dark2); }
+  .portfolio-filter { display:flex; gap:.8rem; margin:2rem 0; flex-wrap:wrap; }
+  .filter-btn {
+    padding:.5rem 1.3rem; border-radius:50px; border:1px solid var(--border);
+    background:transparent; color:var(--text-muted); cursor:pointer;
+    font-family:'Cairo',sans-serif; font-size:.85rem; transition:.3s;
+  }
+  .filter-btn.active, .filter-btn:hover { background:var(--gold); border-color:var(--gold); color:#000; font-weight:700; }
+  .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+  .portfolio-card {
+    border-radius:20px; overflow:hidden; border:1px solid var(--border);
+    transition:.4s; cursor:pointer; position:relative; background:var(--dark3);
+  }
+  .portfolio-card:hover { transform:translateY(-5px); box-shadow:0 25px 60px rgba(0,0,0,.5); }
+  .portfolio-thumb {
+    height:220px; display:flex; align-items:center; justify-content:center;
+    font-size:4rem; position:relative;
+  }
+  .portfolio-thumb::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.8));
+  }
+  .portfolio-info { padding:1.5rem; }
+  .portfolio-info h4 { font-weight:700; margin-bottom:.4rem; }
+  .portfolio-info p { color:var(--text-muted); font-size:.85rem; }
+  .portfolio-tag {
+    display:inline-block; background:rgba(212,175,55,.15);
+    color:var(--gold); padding:.2rem .8rem; border-radius:50px;
+    font-size:.75rem; font-weight:600; margin-top:.6rem;
+  }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .testimonial-card {
+    background:var(--dark3); border:1px solid var(--border); border-radius:20px; padding:2rem;
+    position:relative;
+  }
+  .testimonial-card::before {
+    content:'"'; font-size:6rem; color:var(--gold); opacity:.15;
+    position:absolute; top:-.5rem; right:1.5rem; font-family:'Tajawal',sans-serif; line-height:1;
+  }
+  .stars { color:var(--gold); font-size:1.1rem; margin-bottom:1rem; }
+  .testimonial-text { color:var(--text-muted); line-height:1.8; margin-bottom:1.5rem; font-size:.95rem; }
+  .testimonial-author { display:flex; align-items:center; gap:1rem; }
+  .author-avatar {
+    width:45px; height:45px; border-radius:50%;
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; color:#000; font-size:1rem; flex-shrink:0;
+  }
+  .author-name { font-weight:700; font-size:.95rem; }
+  .author-role { color:var(--text-muted); font-size:.8rem; }
+
+  /* ===== PRICING ===== */
+  #pricing { background:var(--dark2); }
+  .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; margin-top:3rem; }
+  .pricing-card {
+    background:var(--dark3); border:1px solid var(--border); border-radius:24px;
+    padding:2.5rem; text-align:center; transition:.4s; position:relative; overflow:hidden;
+  }
+  .pricing-card.featured {
+    border-color:var(--gold); background:linear-gradient(135deg,rgba(212,175,55,.08),var(--dark3));
+  }
+  .pricing-badge {
+    position:absolute; top:1.5rem; right:-2rem; background:linear-gradient(135deg,var(--gold),var(--accent));
+    color:#000; font-size:.7rem; font-weight:800; padding:.3rem 3rem;
+    transform:rotate(45deg); letter-spacing:1px;
+  }
+  .pricing-plan { font-size:.85rem; color:var(--text-muted); font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:1rem; }
+  .pricing-price {
+    font-family:'Tajawal',sans-serif; font-size:3rem; font-weight:900; margin-bottom:.5rem;
+  }
+  .pricing-price span { font-size:1rem; color:var(--text-muted); font-weight:400; }
+  .pricing-features { list-style:none; margin:1.5rem 0; text-align:right; }
+  .pricing-features li { padding:.5rem 0; border-bottom:1px solid var(--border); color:var(--text-muted); font-size:.9rem; display:flex; align-items:center; gap:.6rem; }
+  .pricing-features li::before { content:'✓'; color:var(--gold); font-weight:700; flex-shrink:0; }
+
+  /* ===== CONTACT ===== */
+  .contact-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:4rem; margin-top:3rem; }
+  @media(max-width:768px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-info { display:flex; flex-direction:column; gap:1.5rem; }
+  .contact-item { display:flex; gap:1rem; align-items:flex-start; }
+  .contact-icon {
+    width:45px; height:45px; border-radius:12px;
+    background:rgba(212,175,55,.1); border:1px solid rgba(212,175,55,.2);
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;
+  }
+  .contact-item h4 { font-weight:700; margin-bottom:.2rem; }
+  .contact-item p { color:var(--text-muted); font-size:.9rem; }
+  .contact-form { display:flex; flex-direction:column; gap:1rem; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media(max-width:500px){.form-row{grid-template-columns:1fr;}}
+  .form-group { display:flex; flex-direction:column; gap:.5rem; }
+  .form-group label { font-size:.85rem; font-weight:600; color:var(--text-muted); }
+  .form-group input, .form-group textarea, .form-group select {
+    background:var(--dark3); border:1px solid var(--border); border-radius:12px;
+    padding:.85rem 1.1rem; color:var(--text); font-family:'Cairo',sans-serif;
+    font-size:.9rem; outline:none; transition:.3s; resize:vertical;
+    width:100%;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color:var(--gold); box-shadow:0 0 0 3px rgba(212,175,55,.1);
+  }
+  .form-group select option { background:var(--dark3); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background:var(--dark2); border-top:1px solid var(--border);
+    padding:3rem 5% 2rem;
+  }
+  .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; margin-bottom:2.5rem; }
+  @media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:500px){.footer-grid{grid-template-columns:1fr;}}
+  .footer-brand .logo { font-size:1.4rem; }
+  .footer-brand p { color:var(--text-muted); font-size:.9rem; line-height:1.8; margin-top:.8rem; max-width:280px; }
+  .footer-col h4 { font-weight:700; margin-bottom:1rem; font-size:.95rem; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:.6rem; }
+  .footer-col ul a { color:var(--text-muted); text-decoration:none; font-size:.9rem; transition:.3s; }
+  .footer-col ul a:hover { color:var(--gold); }
+  .footer-bottom {
+    border-top:1px solid var(--border); padding-top:1.5rem;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+  }
+  .footer-bottom p { color:var(--text-muted); font-size:.85rem; }
+  .social-links { display:flex; gap:.8rem; }
+  .social-link {
+    width:38px; height:38px; border-radius:10px;
+    background:var(--dark3); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-muted); text-decoration:none; transition:.3s; font-size:.9rem;
+  }
+  .social-link:hover { background:var(--gold); color:#000; border-color:var(--gold); }
+
+  /* ===== ADMIN PANEL ===== */
+  #admin-panel {
+    display:none; position:fixed; inset:0; z-index:9999;
+    background:var(--dark); overflow:hidden;
+  }
+  #admin-panel.active { display:flex; }
+  .admin-sidebar {
+    width:240px; background:var(--dark2); border-left:1px solid var(--border);
+    display:flex; flex-direction:column; flex-shrink:0;
+  }
+  .admin-logo {
+    padding:1.5rem; border-bottom:1px solid var(--border);
+    font-family:'Tajawal',sans-serif; font-size:1.3rem; font-weight:800;
+  }
+  .admin-logo span { background:linear-gradient(135deg,var(--gold),var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .admin-nav { padding:1rem; flex:1; }
+  .admin-nav-item {
+    display:flex; align-items:center; gap:.8rem; padding:.75rem 1rem;
+    border-radius:12px; cursor:pointer; transition:.3s; color:var(--text-muted);
+    font-size:.9rem; font-weight:500; margin-bottom:.2rem;
+  }
+  .admin-nav-item:hover, .admin-nav-item.active {
+    background:rgba(212,175,55,.1); color:var(--gold);
+  }
+  .admin-nav-item .nav-icon { font-size:1.1rem; }
+  .admin-main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+  .admin-header {
+    padding:1.2rem 1.5rem; border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--dark2);
+  }
+  .admin-header h2 { font-family:'Tajawal',sans-serif; font-size:1.2rem; font-weight:700; }
+  .admin-header-right { display:flex; align-items:center; gap:1rem; }
+  .admin-badge {
+    background:rgba(212,175,55,.15); color:var(--gold);
+    padding:.25rem .8rem; border-radius:50px; font-size:.75rem; font-weight:700;
+  }
+  .btn-close-admin {
+    background:rgba(239,68,68,.15); color:var(--danger);
+    border:1px solid rgba(239,68,68,.3); padding:.4rem 1rem;
+    border-radius:8px; cursor:pointer; font-family:'Cairo',sans-serif;
+    font-size:.8rem; transition:.3s;
+  }
+  .btn-close-admin:hover { background:var(--danger); color:#fff; }
+  .admin-content { flex:1; overflow-y:auto; padding:1.5rem; }
+  .admin-page { display:none; }
+  .admin-page.active { display:block; }
+
+  /* Admin Cards */
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+  .stat-card {
+    background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:1.5rem;
+    position:relative; overflow:hidden;
+  }
+  .stat-card::after {
+    content:''; position:absolute; top:-20px; left:-20px;
+    width:80px; height:80px; border-radius:50%;
+    background:radial-gradient(circle,rgba(212,175,55,.1),transparent);
+  }
+  .stat-card-label { font-size:.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:1px; }
+  .stat-card-value { font-family:'Tajawal',sans-serif; font-size:2rem; font-weight:800; margin:.4rem 0; }
+  .stat-card-change { font-size:.8rem; }
+  .change-up { color:var(--success); }
+  .change-down { color:var(--danger); }
+
+  /* Admin Table */
+  .admin-table-wrap { background:var(--dark3); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .table-header { padding:1rem 1.5rem; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .table-header h3 { font-weight:700; font-size:.95rem; }
+  .btn-sm {
+    padding:.4rem 1rem; border-radius:8px; border:1px solid var(--border);
+    background:transparent; color:var(--text); font-family:'Cairo',sans-serif;
+    font-size:.8rem; cursor:pointer; transition:.3s;
+  }
+  .btn-sm:hover { border-color:var(--gold); color:var(--gold); }
+  .btn-sm.gold { background:var(--gold); color:#000; border-color:var(--gold); font-weight:700; }
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:right; padding:.8rem 1.2rem; font-size:.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.5px; border-bottom:1px solid var(--border); }
+  td { padding:.9rem 1.2rem; font-size:.88rem; border-bottom:1px solid rgba(255,255,255,.03); }
+  tr:last-child td { border:none; }
+  tr:hover td { background:rgba(255,255,255,.02); }
+  .badge { display:inline-block; padding:.2rem .7rem; border-radius:50px; font-size:.75rem; font-weight:700; }
+  .badge-green { background:rgba(16,185,129,.15); color:var(--success); }
+  .badge-yellow { background:rgba(212,175,55,.15); color:var(--gold); }
+  .badge-red { background:rgba(239,68,68,.15); color:var(--danger); }
+  .badge-blue { background:rgba(59,130,246,.15); color:var(--info); }
+
+  /* Admin Forms */
+  .admin-form { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:1.5rem; }
+  .admin-form h3 { font-weight:700; margin-bottom:1.2rem; font-size:.95rem; }
+  .admin-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  @media(max-width:600px){.admin-form-grid{grid-template-columns:1fr;}}
+  .admin-input {
+    background:var(--dark4); border:1px solid var(--border); border-radius:10px;
+    padding:.7rem 1rem; color:var(--text); font-family:'Cairo',sans-serif; font-size:.88rem;
+    outline:none; transition:.3s; width:100%;
+  }
+  .admin-input:focus { border-color:var(--gold); }
+  .admin-label { font-size:.8rem; color:var(--text-muted); font-weight:600; margin-bottom:.4rem; display:block; }
+  .admin-select {
+    background:var(--dark4); border:1px solid var(--border); border-radius:10px;
+    padding:.7rem 1rem; color:var(--text); font-family:'Cairo',sans-serif; font-size:.88rem;
+    outline:none; width:100%; cursor:pointer;
+  }
+  .admin-textarea {
+    background:var(--dark4); border:1px solid var(--border); border-radius:10px;
+    padding:.7rem 1rem; color:var(--text); font-family:'Cairo',sans-serif; font-size:.88rem;
+    outline:none; width:100%; resize:vertical; min-height:100px;
+  }
+  .admin-textarea:focus, .admin-select:focus { border-color:var(--gold); }
+  .btn-gold {
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    color:#000; padding:.65rem 1.5rem; border-radius:10px;
+    font-family:'Cairo',sans-serif; font-size:.88rem; font-weight:700;
+    border:none; cursor:pointer; transition:.3s;
+  }
+  .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(212,175,55,.3); }
+
+  /* Charts */
+  .charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.5rem; }
+  @media(max-width:900px){.charts-grid{grid-template-columns:1fr;}}
+  .chart-card { background:var(--dark3); border:1px solid var(--border); border-radius:16px; padding:1.5rem; }
+  .chart-card h3 { font-size:.9rem; font-weight:700; margin-bottom:1rem; color:var(--text-muted); }
+
+  /* Login Screen */
+  #admin-login {
+    display:none; position:fixed; inset:0; z-index:10000;
+    background:var(--dark); align-items:center; justify-content:center;
+  }
+  #admin-login.active { display:flex; }
+  .login-box {
+    background:var(--dark2); border:1px solid var(--border); border-radius:24px;
+    padding:3rem; width:100%; max-width:400px; text-align:center;
+  }
+  .login-box h2 { font-family:'Tajawal',sans-serif; font-size:1.8rem; font-weight:800; margin-bottom:.5rem; }
+  .login-box p { color:var(--text-muted); margin-bottom:2rem; font-size:.9rem; }
+  .login-input {
+    background:var(--dark3); border:1px solid var(--border); border-radius:12px;
+    padding:.85rem 1.2rem; color:var(--text); font-family:'Cairo',sans-serif;
+    font-size:.95rem; outline:none; transition:.3s; width:100%; margin-bottom:1rem;
+    text-align:right;
+  }
+  .login-input:focus { border-color:var(--gold); }
+  .login-error { color:var(--danger); font-size:.85rem; margin-top:.5rem; display:none; }
+  .admin-hint { margin-top:1rem; color:var(--text-muted); font-size:.8rem; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:var(--dark2); }
+  ::-webkit-scrollbar-thumb { background:rgba(212,175,55,.3); border-radius:3px; }
+
+  /* Toast */
+  .toast {
+    position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(100px);
+    background:var(--dark3); border:1px solid var(--gold); border-radius:12px;
+    padding:1rem 2rem; z-index:99999; transition:.4s; font-size:.9rem;
+    display:flex; align-items:center; gap:.6rem;
+  }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+
+  @media(max-width:768px){
+    .nav-links { display:none; }
+    .admin-sidebar { width:200px; }
+    .stats-grid { grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">✅ <span id="toast-msg">تم الإرسال بنجاح</span></div>
+
+<!-- ===== ADMIN LOGIN ===== -->
+<div id="admin-login">
+  <div class="login-box">
+    <div class="logo" style="font-size:2rem;margin-bottom:1.5rem;">ProMark</div>
+    <h2>لوحة التحكم</h2>
+    <p>أدخل الرمز السري للدخول</p>
+    <input type="password" class="login-input" id="login-input" placeholder="الرمز السري..." maxlength="10">
+    <div class="login-error" id="login-error">❌ الرمز غير صحيح، حاول مرة أخرى</div>
+    <button class="btn-gold" style="width:100%;padding:.9rem;" onclick="checkLogin()">دخول</button>
+    <div class="admin-hint">* أدخل رمز الدخول المخصص لك</div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div id="admin-panel">
+  <div class="admin-sidebar">
+    <div class="admin-logo">Pro<span>Mark</span> <br><small style="font-size:.7rem;color:var(--text-muted);font-weight:400;">Admin Panel</small></div>
+    <nav class="admin-nav">
+      <div class="admin-nav-item active" onclick="showAdminPage('dashboard',this)"><span class="nav-icon">📊</span> لوحة البيانات</div>
+      <div class="admin-nav-item" onclick="showAdminPage('leads',this)"><span class="nav-icon">👥</span> العملاء المحتملين</div>
+      <div class="admin-nav-item" onclick="showAdminPage('campaigns',this)"><span class="nav-icon">📢</span> الحملات</div>
+      <div class="admin-nav-item" onclick="showAdminPage('services',this)"><span class="nav-icon">⚙️</span> الخدمات</div>
+      <div class="admin-nav-item" onclick="showAdminPage('portfolio',this)"><span class="nav-icon">🎨</span> الأعمال</div>
+      <div class="admin-nav-item" onclick="showAdminPage('testimonials',this)"><span class="nav-icon">⭐</span> التقييمات</div>
+      <div class="admin-nav-item" onclick="showAdminPage('messages',this)"><span class="nav-icon">✉️</span> الرسائل</div>
+      <div class="admin-nav-item" onclick="showAdminPage('settings',this)"><span class="nav-icon">🛠️</span> الإعدادات</div>
+    </nav>
+  </div>
+  <div class="admin-main">
+    <div class="admin-header">
+      <h2 id="admin-title">لوحة البيانات</h2>
+      <div class="admin-header-right">
+        <span class="admin-badge">مرحباً، المدير</span>
+        <button class="btn-close-admin" onclick="closeAdmin()">✕ خروج</button>
+      </div>
+    </div>
+    <div class="admin-content">
+
+      <!-- DASHBOARD PAGE -->
+      <div class="admin-page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-label">إجمالي العملاء</div>
+            <div class="stat-card-value" style="color:var(--gold);">248</div>
+            <div class="stat-card-change change-up">↑ +12% هذا الشهر</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">الحملات النشطة</div>
+            <div class="stat-card-value" style="color:var(--accent);">17</div>
+            <div class="stat-card-change change-up">↑ +3 جديد</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">الإيرادات الشهرية</div>
+            <div class="stat-card-value" style="color:var(--success);">85K</div>
+            <div class="stat-card-change change-up">↑ +22%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">معدل التحويل</div>
+            <div class="stat-card-value" style="color:var(--info);">7.4%</div>
+            <div class="stat-card-change change-down">↓ -0.5%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">الرسائل الجديدة</div>
+            <div class="stat-card-value">23</div>
+            <div class="stat-card-change change-up">↑ +5 اليوم</div>
+          </div>
+        </div>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>📈 الإيرادات - آخر 6 أشهر</h3>
+            <canvas id="revenueChart" height="200"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>🎯 توزيع الخدمات</h3>
+            <canvas id="servicesChart" height="200"></canvas>
+          </div>
+        </div>
+        <div class="charts-grid" style="margin-top:1rem;">
+          <div class="chart-card">
+            <h3>👥 العملاء الجدد أسبوعياً</h3>
+            <canvas id="leadsChart" height="180"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>📱 مصادر الزيارات</h3>
+            <canvas id="trafficChart" height="180"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADS PAGE -->
+      <div class="admin-page" id="page-leads">
+        <div class="admin-form" style="margin-bottom:1.5rem;">
+          <h3>➕ إضافة عميل جديد</h3>
+          <div class="admin-form-grid">
+            <div><label class="admin-label">الاسم الكامل</label><input class="admin-input" id="lead-name" placeholder="اسم العميل"></div>
+            <div><label class="admin-label">رقم الهاتف</label><input class="admin-input" id="lead-phone" placeholder="+20 1XX XXX XXXX"></div>
+            <div><label class="admin-label">البريد الإلكتروني</label><input class="admin-input" id="lead-email" placeholder="email@example.com"></div>
+            <div><label class="admin-label">الخدمة المطلوبة</label>
+              <select class="admin-select" id="lead-service">
+                <option>إدارة السوشيال ميديا</option><option>تصميم جرافيك</option>
+                <option>تسويق بالمحتوى</option><option>إعلانات مدفوعة</option>
+                <option>SEO</option><option>تصميم مواقع</option>
+              </select>
+            </div>
+            <div><label class="admin-label">الميزانية (ج.م)</label><input class="admin-input" id="lead-budget" placeholder="مثال: 5000"></div>
+            <div><label class="admin-label">الحالة</label>
+              <select class="admin-select" id="lead-status">
+                <option>جديد</option><option>تحت المراجعة</option><option>متابعة</option><option>مغلق - إيجابي</option><option>مغلق - سلبي</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-gold" style="margin-top:1rem;" onclick="addLead()">إضافة العميل</button>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="table-header"><h3>قائمة العملاء المحتملين</h3><button class="btn-sm" onclick="exportLeads()">📥 تصدير</button></div>
+          <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>الاسم</th><th>الهاتف</th><th>الخدمة</th><th>الميزانية</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead>
+            <tbody id="leads-tbody">
+              <tr><td>أحمد محمد</td><td>01012345678</td><td>سوشيال ميديا</td><td>3,000</td><td><span class="badge badge-green">إيجابي</span></td><td>2025-01-15</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>سارة أحمد</td><td>01098765432</td><td>تصميم جرافيك</td><td>5,500</td><td><span class="badge badge-yellow">متابعة</span></td><td>2025-01-16</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>محمود علي</td><td>01155443322</td><td>إعلانات مدفوعة</td><td>8,000</td><td><span class="badge badge-blue">جديد</span></td><td>2025-01-17</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- CAMPAIGNS PAGE -->
+      <div class="admin-page" id="page-campaigns">
+        <div class="admin-form" style="margin-bottom:1.5rem;">
+          <h3>📢 إنشاء حملة جديدة</h3>
+          <div class="admin-form-grid">
+            <div><label class="admin-label">اسم الحملة</label><input class="admin-input" id="camp-name" placeholder="اسم الحملة التسويقية"></div>
+            <div><label class="admin-label">المنصة</label>
+              <select class="admin-select" id="camp-platform">
+                <option>Facebook</option><option>Instagram</option><option>TikTok</option>
+                <option>Google Ads</option><option>YouTube</option><option>LinkedIn</option>
+              </select>
+            </div>
+            <div><label class="admin-label">الميزانية الكلية (ج.م)</label><input class="admin-input" id="camp-budget" placeholder="مثال: 10000"></div>
+            <div><label class="admin-label">تاريخ البداية</label><input class="admin-input" type="date" id="camp-start"></div>
+            <div><label class="admin-label">تاريخ الانتهاء</label><input class="admin-input" type="date" id="camp-end"></div>
+            <div><label class="admin-label">الهدف</label>
+              <select class="admin-select" id="camp-goal">
+                <option>زيادة المتابعين</option><option>توليد عملاء</option><option>رفع المبيعات</option><option>توعية بالعلامة</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-gold" style="margin-top:1rem;" onclick="addCampaign()">إنشاء الحملة</button>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="table-header"><h3>الحملات الحالية</h3></div>
+          <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>اسم الحملة</th><th>المنصة</th><th>الميزانية</th><th>الهدف</th><th>الحالة</th><th>الوصول</th><th>إجراء</th></tr></thead>
+            <tbody id="camps-tbody">
+              <tr><td>صيف 2025</td><td>Facebook</td><td>15,000</td><td>مبيعات</td><td><span class="badge badge-green">نشطة</span></td><td>48,200</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>رمضان برانديد</td><td>Instagram</td><td>9,500</td><td>توعية</td><td><span class="badge badge-green">نشطة</span></td><td>32,100</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>لانش المنتج</td><td>TikTok</td><td>6,000</td><td>عملاء</td><td><span class="badge badge-yellow">قيد الإعداد</span></td><td>—</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICES PAGE -->
+      <div class="admin-page" id="page-services">
+        <div class="admin-form" style="margin-bottom:1.5rem;">
+          <h3>⚙️ إضافة خدمة جديدة</h3>
+          <div class="admin-form-grid">
+            <div><label class="admin-label">اسم الخدمة</label><input class="admin-input" id="srv-name" placeholder="اسم الخدمة"></div>
+            <div><label class="admin-label">الأيقونة (emoji)</label><input class="admin-input" id="srv-icon" placeholder="مثال: 📱"></div>
+            <div><label class="admin-label">السعر (ج.م/شهر)</label><input class="admin-input" id="srv-price" placeholder="مثال: 2500"></div>
+            <div><label class="admin-label">الفئة</label>
+              <select class="admin-select" id="srv-cat">
+                <option>تسويق رقمي</option><option>تصميم</option><option>تطوير ويب</option><option>استشارات</option>
+              </select>
+            </div>
+            <div style="grid-column:1/-1"><label class="admin-label">الوصف</label><textarea class="admin-textarea" id="srv-desc" placeholder="وصف الخدمة..."></textarea></div>
+          </div>
+          <button class="btn-gold" style="margin-top:1rem;" onclick="addService()">إضافة الخدمة</button>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="table-header"><h3>قائمة الخدمات</h3></div>
+          <table>
+            <thead><tr><th>الأيقونة</th><th>الخدمة</th><th>الفئة</th><th>السعر</th><th>الحالة</th><th>إجراء</th></tr></thead>
+            <tbody id="services-tbody">
+              <tr><td>📱</td><td>إدارة السوشيال ميديا</td><td>تسويق رقمي</td><td>2,500</td><td><span class="badge badge-green">مفعّل</span></td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>🎨</td><td>تصميم الجرافيك</td><td>تصميم</td><td>1,800</td><td><span class="badge badge-green">مفعّل</span></td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>📊</td><td>إعلانات Google</td><td>تسويق رقمي</td><td>3,500</td><td><span class="badge badge-yellow">موقوف</span></td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PORTFOLIO PAGE -->
+      <div class="admin-page" id="page-portfolio">
+        <div class="admin-form" style="margin-bottom:1.5rem;">
+          <h3>🎨 إضافة مشروع جديد</h3>
+          <div class="admin-form-grid">
+            <div><label class="admin-label">اسم المشروع</label><input class="admin-input" id="port-name" placeholder="اسم المشروع"></div>
+            <div><label class="admin-label">العميل</label><input class="admin-input" id="port-client" placeholder="اسم العميل / الشركة"></div>
+            <div><label class="admin-label">التصنيف</label>
+              <select class="admin-select" id="port-cat">
+                <option>سوشيال ميديا</option><option>هوية بصرية</option><option>إعلانات</option><option>تطوير ويب</option>
+              </select>
+            </div>
+            <div><label class="admin-label">الأيقونة (emoji)</label><input class="admin-input" id="port-icon" placeholder="مثال: 🏪"></div>
+            <div style="grid-column:1/-1"><label class="admin-label">وصف المشروع</label><textarea class="admin-textarea" id="port-desc" placeholder="نبذة عن المشروع ونتائجه..."></textarea></div>
+          </div>
+          <button class="btn-gold" style="margin-top:1rem;" onclick="addPortfolio()">إضافة المشروع</button>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="table-header"><h3>مشاريع محفظة الأعمال</h3></div>
+          <table>
+            <thead><tr><th>الأيقونة</th><th>المشروع</th><th>العميل</th><th>التصنيف</th><th>إجراء</th></tr></thead>
+            <tbody id="portfolio-tbody">
+              <tr><td>🏪</td><td>حملة رمضان</td><td>سوبر ماركت النجمة</td><td>سوشيال ميديا</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>🏠</td><td>هوية بصرية</td><td>مجموعة بناء</td><td>هوية بصرية</td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS PAGE -->
+      <div class="admin-page" id="page-testimonials">
+        <div class="admin-form" style="margin-bottom:1.5rem;">
+          <h3>⭐ إضافة تقييم جديد</h3>
+          <div class="admin-form-grid">
+            <div><label class="admin-label">اسم العميل</label><input class="admin-input" id="test-name" placeholder="اسم العميل"></div>
+            <div><label class="admin-label">المسمى الوظيفي</label><input class="admin-input" id="test-role" placeholder="مدير، صاحب عمل، إلخ..."></div>
+            <div><label class="admin-label">التقييم</label>
+              <select class="admin-select" id="test-rating">
+                <option>⭐⭐⭐⭐⭐ (5)</option><option>⭐⭐⭐⭐ (4)</option><option>⭐⭐⭐ (3)</option>
+              </select>
+            </div>
+            <div><label class="admin-label">الخدمة</label><input class="admin-input" id="test-service" placeholder="الخدمة التي استخدمها"></div>
+            <div style="grid-column:1/-1"><label class="admin-label">نص التقييم</label><textarea class="admin-textarea" id="test-text" placeholder="كتابة تقييم العميل..."></textarea></div>
+          </div>
+          <button class="btn-gold" style="margin-top:1rem;" onclick="addTestimonial()">إضافة التقييم</button>
+        </div>
+        <div class="admin-table-wrap">
+          <div class="table-header"><h3>التقييمات المنشورة</h3></div>
+          <table>
+            <thead><tr><th>العميل</th><th>المسمى</th><th>التقييم</th><th>الخدمة</th><th>الحالة</th><th>إجراء</th></tr></thead>
+            <tbody id="testimonials-tbody">
+              <tr><td>أحمد السيد</td><td>مدير تسويق</td><td>⭐⭐⭐⭐⭐</td><td>سوشيال ميديا</td><td><span class="badge badge-green">منشور</span></td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+              <tr><td>منى خالد</td><td>صاحبة مشروع</td><td>⭐⭐⭐⭐⭐</td><td>تصميم</td><td><span class="badge badge-yellow">معلّق</span></td><td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MESSAGES PAGE -->
+      <div class="admin-page" id="page-messages">
+        <div class="admin-table-wrap">
+          <div class="table-header"><h3>✉️ الرسائل الواردة</h3><span class="badge badge-blue" id="msg-count">23 رسالة</span></div>
+          <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>المرسل</th><th>الهاتف</th><th>الخدمة</th><th>الرسالة</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead>
+            <tbody id="messages-tbody">
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS PAGE -->
+      <div class="admin-page" id="page-settings">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+          <div class="admin-form">
+            <h3>🏢 بيانات الشركة</h3>
+            <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:.5rem;">
+              <div><label class="admin-label">اسم الشركة</label><input class="admin-input" value="ProMark Agency"></div>
+              <div><label class="admin-label">البريد الإلكتروني</label><input class="admin-input" value="info@promark.agency"></div>
+              <div><label class="admin-label">رقم الهاتف</label><input class="admin-input" value="+20 10 0000 0000"></div>
+              <div><label class="admin-label">العنوان</label><input class="admin-input" value="القاهرة، مصر"></div>
+              <div><label class="admin-label">واتساب</label><input class="admin-input" value="+20 10 0000 0000"></div>
+              <button class="btn-gold" onclick="showToast('تم حفظ البيانات ✅')">حفظ التغييرات</button>
+            </div>
+          </div>
+          <div class="admin-form">
+            <h3>🔒 تغيير الرمز السري</h3>
+            <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:.5rem;">
+              <div><label class="admin-label">الرمز الحالي</label><input class="admin-input" type="password" placeholder="●●●●●●"></div>
+              <div><label class="admin-label">الرمز الجديد</label><input class="admin-input" type="password" placeholder="●●●●●●"></div>
+              <div><label class="admin-label">تأكيد الرمز</label><input class="admin-input" type="password" placeholder="●●●●●●"></div>
+              <button class="btn-gold" onclick="showToast('تم تغيير الرمز بنجاح ✅')">تحديث الرمز</button>
+            </div>
+          </div>
+          <div class="admin-form">
+            <h3>📱 روابط التواصل الاجتماعي</h3>
+            <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:.5rem;">
+              <div><label class="admin-label">Facebook</label><input class="admin-input" placeholder="رابط Facebook"></div>
+              <div><label class="admin-label">Instagram</label><input class="admin-input" placeholder="رابط Instagram"></div>
+              <div><label class="admin-label">TikTok</label><input class="admin-input" placeholder="رابط TikTok"></div>
+              <div><label class="admin-label">LinkedIn</label><input class="admin-input" placeholder="رابط LinkedIn"></div>
+              <button class="btn-gold" onclick="showToast('تم حفظ الروابط ✅')">حفظ الروابط</button>
+            </div>
+          </div>
+          <div class="admin-form">
+            <h3>💰 إعدادات الأسعار</h3>
+            <div style="display:flex;flex-direction:column;gap:.8rem;margin-top:.5rem;">
+              <div><label class="admin-label">الباقة الأساسية (ج.م)</label><input class="admin-input" value="1500"></div>
+              <div><label class="admin-label">الباقة الاحترافية (ج.م)</label><input class="admin-input" value="3500"></div>
+              <div><label class="admin-label">الباقة المميزة (ج.م)</label><input class="admin-input" value="7000"></div>
+              <div><label class="admin-label">العملة</label><select class="admin-select"><option>جنيه مصري (ج.م)</option><option>دولار ($)</option><option>ريال (ر.س)</option></select></div>
+              <button class="btn-gold" onclick="showToast('تم تحديث الأسعار ✅')">حفظ الأسعار</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end admin-content -->
+  </div><!-- end admin-main -->
+</div><!-- end admin-panel -->
+
+<!-- ===== WEBSITE ===== -->
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ProMark</div>
+  <ul class="nav-links">
+    <li><a href="#services">خدماتنا</a></li>
+    <li><a href="#about">من نحن</a></li>
+    <li><a href="#portfolio">أعمالنا</a></li>
+    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="#contact">تواصل معنا</a></li>
+  </ul>
+  <a href="#" class="nav-btn" onclick="openAdminLogin()">لوحة التحكم</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="float-card" style="text-align:right;">
+    <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:.3rem;">📈 نمو الأعمال</div>
+    <div style="font-size:1.3rem;font-weight:800;color:var(--gold);">+340%</div>
+    <div style="font-size:.7rem;color:var(--text-muted);">معدل النمو هذا العام</div>
+  </div>
+  <div class="float-card" style="text-align:right;">
+    <div style="font-size:.75rem;color:var(--text-muted);margin-bottom:.3rem;">⭐ تقييم العملاء</div>
+    <div style="font-size:1.3rem;font-weight:800;color:var(--gold);">4.9/5</div>
+    <div style="font-size:.7rem;color:var(--text-muted);">من 200+ تقييم</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🚀 الوكالة الرائدة في التسويق الرقمي</div>
+    <h1>نبني علامتك<br>التجارية في <span>العالم الرقمي</span></h1>
+    <p>وكالة تسويق متكاملة تقدم حلولاً إبداعية وفعّالة تحول أعمالك إلى قوة تسويقية لا تُقاوَم</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">ابدأ الآن مجاناً</a>
+      <a href="#portfolio" class="btn-outline">شاهد أعمالنا</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">عميل سعيد</div></div>
+      <div class="stat"><div class="stat-num">7+</div><div class="stat-label">سنوات خبرة</div></div>
+      <div class="stat"><div class="stat-num">1200+</div><div class="stat-label">مشروع منجز</div></div>
+      <div class="stat"><div class="stat-num">98%</div><div class="stat-label">رضا العملاء</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="text-center">
+    <div class="section-label">خدماتنا</div>
+    <h2 class="section-title">حلول تسويقية <span>متكاملة</span></h2>
+    <p class="section-sub">نقدم باقة شاملة من الخدمات التسويقية الرقمية لتحقيق أهدافك بكفاءة عالية</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <h3>إدارة السوشيال ميديا</h3>
+      <p>إدارة احترافية لحساباتك على جميع المنصات مع محتوى إبداعي يجذب جمهورك المستهدف</p>
+      <div class="service-link">اكتشف المزيد ←</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <h3>التصميم الجرافيكي</h3>
+      <p>تصاميم احترافية ومبتكرة تعكس هوية علامتك التجارية وتترك انطباعاً لا يُنسى</p>
+      <div class="service-link">اكتشف المزيد ←</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>الإعلانات المدفوعة</h3>
+      <p>حملات إعلانية مستهدفة على جوجل وفيسبوك وإنستغرام بأعلى عائد على الاستثمار</p>
+      <div class="service-link">اكتشف المزيد ←</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✍️</div>
+      <h3>التسويق بالمحتوى</h3>
+      <p>استراتيجية محتوى متكاملة تبني ثقة جمهورك وتحوّلهم من متابعين إلى عملاء</p>
+      <div class="service-link">اكتشف المزيد ←</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔍</div>
+      <h3>تحسين محركات البحث SEO</h3>
+      <p>نضع موقعك في صدارة نتائج البحث ونزيد زياراتك العضوية بشكل مستدام</p>
+      <div class="service-link">اكتشف المزيد ←</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💻</div>
+      <h3>تطوير المواقع</h3>
+      <p>تصميم وتطوير مواقع ويب احترافية وسريعة مع تجربة مستخدم مميزة</p>
+      <div class="service-link">اكتشف المزيد ←</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--dark2);">
+  <div class="about-grid">
+    <div>
+      <div class="section-label">من نحن</div>
+      <h2 class="section-title">نصنع <span>الفرق</span> الحقيقي</h2>
+      <p class="section-sub">فريق من الخبراء الشغوفين بالتسويق الرقمي نؤمن بأن كل علامة تجارية تستحق أن تتألق في الفضاء الرقمي</p>
+      <div class="about-features">
+        <div class="feature-item"><div class="feat-dot"></div><p>استراتيجيات مخصصة لكل عميل بناءً على تحليل دقيق للسوق</p></div>
+        <div class="feature-item"><div class="feat-dot"></div><p>فريق متخصص من المبدعين والمحللين والمسوّقين</p></div>
+        <div class="feature-item"><div class="feat-dot"></div><p>تقارير شفافة وتفصيلية عن أداء كل حملة</p></div>
+        <div class="feature-item"><div class="feat-dot"></div><p>دعم على مدار الساعة وتواصل فوري مع فريقنا</p></div>
+        <div class="feature-item"><div class="feat-dot"></div><p>ضمان النتائج أو استرداد كامل المبلغ</p></div>
+      </div>
+      <a href="#contact" class="btn-primary" style="display:inline-block;margin-top:2rem;">احجز استشارة مجانية</a>
+    </div>
+    <div class="about-img">
+      <div class="about-visual">
+        <div class="big-num">7+</div>
+        <p>سنوات من التميز</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;">
+          <div style="text-align:center;background:var(--dark4);padding:1rem;border-radius:14px;border:1px solid var(--border);">
+            <div style="font-size:1.8rem;font-weight:800;color:var(--accent);">500+</div>
+            <div style="font-size:.8rem;color:var(--text-muted);">عميل</div>
+          </div>
+          <div style="text-align:center;background:var(--dark4);padding:1rem;border-radius:14px;border:1px solid var(--border);">
+            <div style="font-size:1.8rem;font-weight:800;color:var(--info);">30+</div>
+            <div style="font-size:.8rem;color:var(--text-muted);">خبير</div>
+          </div>
+          <div style="text-align:center;background:var(--dark4);padding:1rem;border-radius:14px;border:1px solid var(--border);">
+            <div style="font-size:1.8rem;font-weight:800;color:var(--success);">98%</div>
+            <div style="font-size:.8rem;color:var(--text-muted);">رضا</div>
+          </div>
+          <div style="text-align:center;background:var(--dark4);padding:1rem;border-radius:14px;border:1px solid var(--border);">
+            <div style="font-size:1.8rem;font-weight:800;color:var(--gold);">15+</div>
+            <div style="font-size:.8rem;color:var(--text-muted);">جائزة</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="text-center">
+    <div class="section-label">أعمالنا</div>
+    <h2 class="section-title">أعمال <span>نفتخر بها</span></h2>
+    <p class="section-sub">نماذج من مشاريعنا الناجحة التي حققت نتائج استثنائية لعملائنا</p>
+  </div>
+  <div class="portfolio-filter">
+    <button class="filter-btn active" onclick="filterPortfolio('all',this)">الكل</button>
+    <button class="filter-btn" onclick="filterPortfolio('social',this)">سوشيال ميديا</button>
+    <button class="filter-btn" onclick="filterPortfolio('design',this)">تصميم</button>
+    <button class="filter-btn" onclick="filterPortfolio('ads',this)">إعلانات</button>
+    <button class="filter-btn" onclick="filterPortfolio('web',this)">مواقع ويب</button>
+  </div>
+  <div class="portfolio-grid" id="portfolio-grid">
+    <div class="portfolio-card" data-cat="social">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e);">🏪</div>
+      <div class="portfolio-info"><h4>حملة رمضان 2024</h4><p>سوبر ماركت النجمة - زيادة المبيعات 180%</p><span class="portfolio-tag">سوشيال ميديا</span></div>
+    </div>
+    <div class="portfolio-card" data-cat="design">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#0f3460,#16213e);">🏠</div>
+      <div class="portfolio-info"><h4>هوية بصرية متكاملة</h4><p>مجموعة بناء - إعادة تصميم العلامة التجارية</p><span class="portfolio-tag">تصميم</span></div>
+    </div>
+    <div class="portfolio-card" data-cat="ads">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1b1b2f,#2c2c54);">🚗</div>
+      <div class="portfolio-info"><h4>حملة إعلانية Google</h4><p>وكالة سيارات - 400 عميل محتمل شهرياً</p><span class="portfolio-tag">إعلانات</span></div>
+    </div>
+    <div class="portfolio-card" data-cat="web">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#0a0a1a,#1a0a2e);">💊</div>
+      <div class="portfolio-info"><h4>موقع صيدلية ديجيتال</h4><p>شبكة صيدليات - 20,000 زيارة شهرية</p><span class="portfolio-tag">مواقع ويب</span></div>
+    </div>
+    <div class="portfolio-card" data-cat="social">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#1a0a0a,#2e1a0a);">☕</div>
+      <div class="portfolio-info"><h4>إدارة كافيه ترند</h4><p>سلسلة كافيهات - 50k متابع جديد في 3 شهور</p><span class="portfolio-tag">سوشيال ميديا</span></div>
+    </div>
+    <div class="portfolio-card" data-cat="design">
+      <div class="portfolio-thumb" style="background:linear-gradient(135deg,#0a1a0a,#0a2e1a);">👗</div>
+      <div class="portfolio-info"><h4>هوية دار أزياء</h4><p>علامة تجارية فاخرة - تصميم شامل 360°</p><span class="portfolio-tag">تصميم</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="background:var(--dark2);">
+  <div class="text-center">
+    <div class="section-label">آراء العملاء</div>
+    <h2 class="section-title">ماذا يقول <span>عملاؤنا</span></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p class="testimonial-text">فريق ProMark غيّر مسار عملي كلياً. في 3 شهور ارتفعت مبيعاتي 200% وأصبح لديّ حضور رقمي قوي جداً.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">أح</div>
+        <div><div class="author-name">أحمد السيد</div><div class="author-role">صاحب مطعم | القاهرة</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p class="testimonial-text">الأفضل في السوق بدون منافس. الفريق محترف، ملتزم بالمواعيد، ونتائجهم تتحدث عن نفسها بالأرقام.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">من</div>
+        <div><div class="author-name">منى خالد</div><div class="author-role">مؤسِّسة علامة تجارية</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p class="testimonial-text">تعاملت مع أكثر من وكالة لكن ProMark مختلفة تماماً. يفهمون احتياجاتك ويقدمون حلولاً حقيقية تجلب نتائج.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">مح</div>
+        <div><div class="author-name">محمود إبراهيم</div><div class="author-role">مدير تسويق | شركة كبرى</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="text-center">
+    <div class="section-label">الأسعار</div>
+    <h2 class="section-title">باقات <span>تناسب جميع الأحجام</span></h2>
+    <p class="section-sub">اختر الباقة المناسبة لعملك وابدأ رحلة نجاحك الرقمي اليوم</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <div class="pricing-plan">الباقة الأساسية</div>
+      <div class="pricing-price">1,500 <span>ج.م / شهر</span></div>
+      <ul class="pricing-features">
+        <li>إدارة منصتين اجتماعيتين</li>
+        <li>12 منشور شهرياً</li>
+        <li>تصميم 8 بوستات</li>
+        <li>تقرير شهري</li>
+        <li>دعم فني أسبوعي</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="display:block;text-align:center;">ابدأ الآن</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-badge">الأكثر طلباً</div>
+      <div class="pricing-plan">الباقة الاحترافية</div>
+      <div class="pricing-price" style="color:var(--gold);">3,500 <span>ج.م / شهر</span></div>
+      <ul class="pricing-features">
+        <li>إدارة 4 منصات اجتماعية</li>
+        <li>25 منشور شهرياً</li>
+        <li>تصميم 20 بوست + ريلز</li>
+        <li>حملة إعلانية مدفوعة</li>
+        <li>تقارير أسبوعية تفصيلية</li>
+        <li>دعم يومي على واتساب</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display:block;text-align:center;">ابدأ الآن</a>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-plan">الباقة المميزة</div>
+      <div class="pricing-price">7,000 <span>ج.م / شهر</span></div>
+      <ul class="pricing-features">
+        <li>إدارة جميع المنصات</li>
+        <li>محتوى غير محدود</li>
+        <li>حملات إعلانية متعددة</li>
+        <li>SEO + تطوير موقع</li>
+        <li>استراتيجية تسويق كاملة</li>
+        <li>مدير حساب مخصص 24/7</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="display:block;text-align:center;">ابدأ الآن</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--dark2);">
+  <div class="text-center" style="margin-bottom:2rem;">
+    <div class="section-label">تواصل معنا</div>
+    <h2 class="section-title">ابدأ <span>قصة نجاحك</span> الآن</h2>
+    <p class="section-sub">تواصل معنا اليوم واحصل على استشارة مجانية مع أحد خبرائنا</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div><h4>اتصل بنا</h4><p>+20 10 0000 0000</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div><h4>واتساب</h4><p>+20 10 0000 0000</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div><h4>البريد الإلكتروني</h4><p>info@promark.agency</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div><h4>العنوان</h4><p>القاهرة، مصر</p></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div><h4>ساعات العمل</h4><p>السبت - الخميس: 9ص - 9م</p></div>
+      </div>
+    </div>
+    <div class="contact-form" id="contact-form">
+      <div class="form-row">
+        <div class="form-group"><label>الاسم الكامل *</label><input id="c-name" placeholder="اسمك الكريم"></div>
+        <div class="form-group"><label>رقم الهاتف *</label><input id="c-phone" placeholder="+20 1XX XXX XXXX"></div>
+      </div>
+      <div class="form-group"><label>البريد الإلكتروني</label><input id="c-email" placeholder="email@example.com"></div>
+      <div class="form-group">
+        <label>الخدمة المطلوبة</label>
+        <select id="c-service">
+          <option value="">اختر الخدمة...</option>
+          <option>إدارة السوشيال ميديا</option>
+          <option>التصميم الجرافيكي</option>
+          <option>الإعلانات المدفوعة</option>
+          <option>SEO</option>
+          <option>تطوير موقع</option>
+          <option>باقة متكاملة</option>
+        </select>
+      </div>
+      <div class="form-group"><label>رسالتك</label><textarea id="c-msg" rows="4" placeholder="اكتب رسالتك أو استفسارك هنا..."></textarea></div>
+      <button class="btn-primary" style="width:100%;font-size:1rem;" onclick="submitContact()">إرسال الطلب ✈️</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">ProMark</div>
+      <p>وكالة تسويق رقمي متكاملة تساعد الشركات على النمو وبناء حضور قوي في الفضاء الرقمي منذ 2018.</p>
+    </div>
+    <div class="footer-col">
+      <h4>خدماتنا</h4>
+      <ul>
+        <li><a href="#">سوشيال ميديا</a></li>
+        <li><a href="#">تصميم جرافيك</a></li>
+        <li><a href="#">إعلانات مدفوعة</a></li>
+        <li><a href="#">SEO</a></li>
+        <li><a href="#">تطوير مواقع</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>روابط سريعة</h4>
+      <ul>
+        <li><a href="#about">من نحن</a></li>
+        <li><a href="#portfolio">أعمالنا</a></li>
+        <li><a href="#pricing">الأسعار</a></li>
+        <li><a href="#contact">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <ul>
+        <li><a href="#">📞 +20 10 0000 0000</a></li>
+        <li><a href="#">💬 واتساب</a></li>
+        <li><a href="#">📧 info@promark.agency</a></li>
+        <li><a href="#">📍 القاهرة، مصر</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 ProMark Agency. جميع الحقوق محفوظة.</p>
+    <div class="social-links">
+      <a href="#" class="social-link">f</a>
+      <a href="#" class="social-link">in</a>
+      <a href="#" class="social-link">tw</a>
+      <a href="#" class="social-link">yt</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const ADMIN_CODE = '251436';
+  let messages = [];
+
+  // ===== LOGIN =====
+  function openAdminLogin() {
+    document.getElementById('admin-login').classList.add('active');
+    setTimeout(() => document.getElementById('login-input').focus(), 100);
+  }
+  function checkLogin() {
+    const val = document.getElementById('login-input').value;
+    if (val === ADMIN_CODE) {
+      document.getElementById('admin-login').classList.remove('active');
+      document.getElementById('admin-panel').classList.add('active');
+      document.getElementById('login-input').value = '';
+      document.getElementById('login-error').style.display = 'none';
+      initCharts();
+      renderMessages();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+      document.getElementById('login-input').value = '';
+    }
+  }
+  document.getElementById('login-input').addEventListener('keydown', e => { if(e.key==='Enter') checkLogin(); });
+  function closeAdmin() {
+    document.getElementById('admin-panel').classList.remove('active');
+  }
+
+  // ===== ADMIN PAGES =====
+  function showAdminPage(page, el) {
+    document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    el.classList.add('active');
+    const titles = {dashboard:'لوحة البيانات',leads:'العملاء المحتملين',campaigns:'الحملات التسويقية',services:'الخدمات',portfolio:'محفظة الأعمال',testimonials:'التقييمات',messages:'الرسائل',settings:'الإعدادات'};
+    document.getElementById('admin-title').textContent = titles[page] || page;
+    if(page==='dashboard') initCharts();
+  }
+
+  // ===== CHARTS =====
+  let chartsInit = false;
+  function initCharts() {
+    if (chartsInit) return;
+    chartsInit = true;
+    const gold = '#D4AF37', accent = '#FF6B35', info = '#3B82F6', success = '#10B981';
+    const defaults = { color:'#8888AA', font:{family:'Cairo'} };
+
+    new Chart(document.getElementById('revenueChart'), {
+      type:'bar',
+      data:{ labels:['أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر','يناير'],
+        datasets:[{label:'الإيرادات',data:[52000,61000,74000,68000,83000,95000],backgroundColor:gold+'88',borderColor:gold,borderWidth:2,borderRadius:6}]},
+      options:{plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo'}}}},scales:{x:{ticks:{color:'#666'},grid:{color:'#ffffff08'}},y:{ticks:{color:'#666'},grid:{color:'#ffffff08'}}}}
+    });
+
+    new Chart(document.getElementById('servicesChart'), {
+      type:'doughnut',
+      data:{ labels:['سوشيال ميديا','تصميم','إعلانات','SEO','مواقع'],
+        datasets:[{data:[35,25,20,12,8],backgroundColor:[gold,accent,info,success,'#7C3AED'],borderWidth:0}]},
+      options:{plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo'}}}}}
+    });
+
+    new Chart(document.getElementById('leadsChart'), {
+      type:'line',
+      data:{ labels:['أ1','أ2','أ3','أ4','أ5','أ6','أ7'],
+        datasets:[{label:'عملاء جدد',data:[12,19,15,27,23,31,28],borderColor:accent,backgroundColor:accent+'22',fill:true,tension:.4,pointBackgroundColor:accent}]},
+      options:{plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo'}}}},scales:{x:{ticks:{color:'#666'},grid:{color:'#ffffff08'}},y:{ticks:{color:'#666'},grid:{color:'#ffffff08'}}}}
+    });
+
+    new Chart(document.getElementById('trafficChart'), {
+      type:'pie',
+      data:{ labels:['Facebook','Google','Instagram','مباشر','أخرى'],
+        datasets:[{data:[38,27,20,10,5],backgroundColor:[info,success,accent,gold,'#7C3AED'],borderWidth:0}]},
+      options:{plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo'}}}}}
+    });
+  }
+
+  // ===== ADD ROWS =====
+  function addRow(tbodyId, cells, extraAction) {
+    const tbody = document.getElementById(tbodyId);
+    const tr = document.createElement('tr');
+    const today = new Date().toISOString().split('T')[0];
+    tr.innerHTML = cells + `<td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteRow(this)">حذف</button></td>`;
+    tbody.insertBefore(tr, tbody.firstChild);
+  }
+  function deleteRow(btn) { btn.closest('tr').remove(); showToast('تم الحذف ✅'); }
+
+  function addLead() {
+    const n=v('lead-name'),p=v('lead-phone'),e=v('lead-email'),s=v('lead-service'),b=v('lead-budget'),st=v('lead-status');
+    if(!n||!p){showToast('يرجى ملء الاسم والهاتف ⚠️');return;}
+    const badges = {'جديد':'badge-blue','تحت المراجعة':'badge-yellow','متابعة':'badge-yellow','مغلق - إيجابي':'badge-green','مغلق - سلبي':'badge-red'};
+    addRow('leads-tbody',`<td>${n}</td><td>${p}</td><td>${s}</td><td>${b||'—'}</td><td><span class="badge ${badges[st]||'badge-blue'}">${st}</span></td><td>${new Date().toISOString().split('T')[0]}</td>`);
+    ['lead-name','lead-phone','lead-email','lead-budget'].forEach(id=>document.getElementById(id).value='');
+    showToast('تم إضافة العميل ✅');
+  }
+
+  function addCampaign() {
+    const n=v('camp-name'),pl=v('camp-platform'),b=v('camp-budget'),g=v('camp-goal');
+    if(!n){showToast('يرجى إدخال اسم الحملة ⚠️');return;}
+    addRow('camps-tbody',`<td>${n}</td><td>${pl}</td><td>${b||'—'}</td><td>${g}</td><td><span class="badge badge-yellow">قيد الإعداد</span></td><td>—</td>`);
+    ['camp-name','camp-budget'].forEach(id=>document.getElementById(id).value='');
+    showToast('تم إنشاء الحملة ✅');
+  }
+
+  function addService() {
+    const n=v('srv-name'),ic=v('srv-icon'),pr=v('srv-price'),cat=v('srv-cat');
+    if(!n){showToast('يرجى إدخال اسم الخدمة ⚠️');return;}
+    addRow('services-tbody',`<td>${ic||'⚙️'}</td><td>${n}</td><td>${cat}</td><td>${pr||'—'}</td><td><span class="badge badge-green">مفعّل</span></td>`);
+    ['srv-name','srv-icon','srv-price','srv-desc'].forEach(id=>document.getElementById(id).value='');
+    showToast('تم إضافة الخدمة ✅');
+  }
+
+  function addPortfolio() {
+    const n=v('port-name'),cl=v('port-client'),cat=v('port-cat'),ic=v('port-icon');
+    if(!n){showToast('يرجى إدخال اسم المشروع ⚠️');return;}
+    addRow('portfolio-tbody',`<td>${ic||'🎨'}</td><td>${n}</td><td>${cl||'—'}</td><td>${cat}</td>`);
+    ['port-name','port-client','port-icon','port-desc'].forEach(id=>document.getElementById(id).value='');
+    showToast('تم إضافة المشروع ✅');
+  }
+
+  function addTestimonial() {
+    const n=v('test-name'),r=v('test-role'),rt=v('test-rating'),s=v('test-service');
+    if(!n){showToast('يرجى إدخال اسم العميل ⚠️');return;}
+    addRow('testimonials-tbody',`<td>${n}</td><td>${r}</td><td>${rt.substring(0,5)}</td><td>${s||'—'}</td><td><span class="badge badge-yellow">معلّق</span></td>`);
+    ['test-name','test-role','test-service','test-text'].forEach(id=>document.getElementById(id).value='');
+    showToast('تم إضافة التقييم ✅');
+  }
+
+  // ===== MESSAGES =====
+  function renderMessages() {
+    const tbody = document.getElementById('messages-tbody');
+    tbody.innerHTML = messages.length === 0 ?
+      '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem;">لا توجد رسائل جديدة</td></tr>' :
+      messages.map((m,i)=>`<tr>
+        <td>${m.name}</td><td>${m.phone}</td><td>${m.service||'—'}</td>
+        <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${m.msg||'—'}</td>
+        <td>${m.date}</td>
+        <td><span class="badge badge-blue">جديد</span></td>
+        <td><button class="btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="deleteMsg(${i})">حذف</button></td>
+      </tr>`).join('');
+    document.getElementById('msg-count').textContent = messages.length + ' رسالة';
+  }
+  function deleteMsg(i) { messages.splice(i,1); renderMessages(); showToast('تم حذف الرسالة ✅'); }
+
+  // ===== CONTACT FORM =====
+  function submitContact() {
+    const n=v('c-name'),p=v('c-phone'),e=v('c-email'),s=v('c-service'),m=v('c-msg');
+    if(!n||!p){showToast('يرجى ملء الاسم ورقم الهاتف ⚠️');return;}
+    messages.unshift({name:n,phone:p,email:e,service:s,msg:m,date:new Date().toISOString().split('T')[0]});
+    ['c-name','c-phone','c-email','c-msg'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('c-service').value='';
+    showToast('تم إرسال طلبك بنجاح! سنتواصل معك قريباً 🎉');
+  }
+
+  // ===== PORTFOLIO FILTER =====
+  function filterPortfolio(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.portfolio-card').forEach(c=>{
+      c.style.display = (cat==='all'||c.dataset.cat===cat) ? 'block' : 'none';
+    });
+  }
+
+  // ===== EXPORT =====
+  function exportLeads() {
+    const rows = [['الاسم','الهاتف','الخدمة','الميزانية','الحالة','التاريخ']];
+    document.querySelectorAll('#leads-tbody tr').forEach(tr=>{
+      const cells = [...tr.querySelectorAll('td')].slice(0,-1).map(td=>td.textContent.trim());
+      rows.push(cells);
+    });
+    const csv = rows.map(r=>r.join(',')).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+    a.download = 'leads.csv'; a.click();
+    showToast('تم التصدير بنجاح 📥');
+  }
+
+  // ===== HELPERS =====
+  function v(id){ return document.getElementById(id)?.value?.trim()||''; }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), 3000);
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'});}
+    });
+  });
+</script>
+</body>
+</html>
